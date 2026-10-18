@@ -1,4 +1,4 @@
-const formState = {
+const formData = {
     email: '',
     message: '',
 };
@@ -9,10 +9,10 @@ function populateForm() {
     if (!savedData) return;
     try {
         const parsedData = JSON.parse(savedData);
-        formState.email = parsedData.email || '';
-        formState.message = parsedData.message || '';
-        form.elements.email.value = formState.email;
-        form.elements.message.value = formState.message;
+        formData.email = parsedData.email || '';
+        formData.message = parsedData.message || '';
+        form.elements.email.value = formData.email;
+        form.elements.message.value = formData.message;
     } catch (error) {
         console.error('Помилка парсингу даних з localStorage:', error);
     }
@@ -21,8 +21,8 @@ populateForm();
 form.addEventListener('input', event => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value.trim();
-    formState[fieldName] = fieldValue;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formState));
+    formData[fieldName] = fieldValue;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 });
 form.addEventListener('submit', event => {
     event.preventDefault();
@@ -32,9 +32,9 @@ form.addEventListener('submit', event => {
         alert('Будь ласка, заповніть всі поля форми.');
         return;
     }
-    console.log(formState);
+    console.log(formData);
     localStorage.removeItem(STORAGE_KEY);
-    formState.email = '';
-    formState.message = '';
+    formData.email = '';
+    formData.message = '';
     form.reset();
 });
